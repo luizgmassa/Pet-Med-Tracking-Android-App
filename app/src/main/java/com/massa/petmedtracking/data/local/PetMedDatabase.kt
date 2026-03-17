@@ -12,7 +12,7 @@ import com.massa.petmedtracking.data.local.entity.PetEntity
 @Database(
     entities = [PetEntity::class, MedicationEntity::class],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class PetMedDatabase : RoomDatabase() {
