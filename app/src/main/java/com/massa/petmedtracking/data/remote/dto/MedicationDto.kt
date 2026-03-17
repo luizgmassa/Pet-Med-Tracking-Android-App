@@ -1,8 +1,5 @@
 package com.massa.petmedtracking.data.remote.dto
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class MedicationDto(
     val id: Long? = null,
     val petId: Long,

@@ -1,8 +1,5 @@
 package com.massa.petmedtracking.data.remote.dto
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 enum class FrequencyDto {
     ONCE_DAILY,
     TWICE_DAILY,

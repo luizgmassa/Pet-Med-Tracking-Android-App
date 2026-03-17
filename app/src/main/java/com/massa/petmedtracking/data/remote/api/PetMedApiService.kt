@@ -1,30 +1,30 @@
 package com.massa.petmedtracking.data.remote.api
 
+import com.massa.petmedtracking.data.remote.dto.FrequencyDto
 import com.massa.petmedtracking.data.remote.dto.MedicationDto
 import com.massa.petmedtracking.data.remote.dto.PetDto
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import java.util.Date
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface PetMedApiService {
+@Singleton
+class PetMedApiService @Inject constructor() {
 
-    @GET("pets")
-    suspend fun getAllPets(): List<PetDto>
+    private val now = System.currentTimeMillis()
 
-    @GET("pets/{id}")
-    suspend fun getPetById(@Path("id") id: Long): PetDto
+    private val pets = mutableListOf<PetDto>()
 
-    @POST("pets")
-    suspend fun createPet(@Body pet: PetDto): PetDto
+    private val medications = mutableListOf<MedicationDto>()
 
-    @GET("pets/{petId}/medications")
-    suspend fun getMedicationsForPet(@Path("petId") petId: Long): List<MedicationDto>
+    suspend fun createPet(pet: PetDto): PetDto {
+        val newPet = pet.copy(id = (pets.size + 1).toLong(), createdAt = now, updatedAt = now)
+        pets.add(newPet)
+        return newPet
+    }
 
-    @GET("medications/{id}")
-    suspend fun getMedicationById(@Path("id") id: Long): MedicationDto
-
-    @POST("medications")
-    suspend fun createMedication(@Body medication: MedicationDto): MedicationDto
+    suspend fun createMedication(medication: MedicationDto): MedicationDto {
+        val newMed = medication.copy(id = (medications.size + 1).toLong(), createdAt = now, updatedAt = now)
+        medications.add(newMed)
+        return newMed
+    }
 }

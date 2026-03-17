@@ -13,10 +13,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.Retrofit
-import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -45,20 +41,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
-        val networkJson = Json { ignoreUnknownKeys = true }
-        return Retrofit.Builder()
-            .baseUrl("https://api.petmedtracking.placeholder.com/")
-            .addConverterFactory(
-                networkJson.asConverterFactory("application/json".toMediaType())
-            )
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun providePetMedApiService(retrofit: Retrofit): PetMedApiService {
-        return retrofit.create(PetMedApiService::class.java)
+    fun providePetMedApiService(): PetMedApiService {
+        return PetMedApiService()
     }
 
     @Provides
